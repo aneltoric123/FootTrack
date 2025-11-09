@@ -1,0 +1,10 @@
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/FootTrack.csproj.AssemblyReference.cache
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/rpswa.dswa.cache.json
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/FootTrack.GeneratedMSBuildEditorConfig.editorconfig
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/FootTrack.AssemblyInfoInputs.cache
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/FootTrack.AssemblyInfo.cs
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/FootTrack.csproj.CoreCompileInputs.cache
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/FootTrack.MvcApplicationPartsAssemblyInfo.cache
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/FootTrack.RazorAssemblyInfo.cache
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/FootTrack.RazorAssemblyInfo.cs
+/Users/aneltoric/Documents/IS/FootTrack/obj/Debug/net10.0/FootTrack.sourcelink.json

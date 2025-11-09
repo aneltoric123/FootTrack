@@ -2,10 +2,10 @@ namespace FootTrack.Models
 {
     public class EkipaVSezoni
     {
-        public int EkipaID { get; set; }
+        public int EkipaId { get; set; }
         public Ekipa Ekipa { get; set; } = null!;
 
-        public int SezonaID { get; set; }
+        public int SezonaId { get; set; }
         public Sezona Sezona { get; set; } = null!;
 
 

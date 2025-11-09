@@ -21,5 +21,7 @@ namespace FootTrack.Models
 
         public ICollection<IgralecNaTekmi> Igralci { get; set; } = new List<IgralecNaTekmi>();
         public ICollection<DogodekNaTekmi> Dogodki { get; set; } = new List<DogodekNaTekmi>();
+
+        public ICollection<SodnikTekma> Sodniki { get; set; } = new List<SodnikTekma>();
     }
 }

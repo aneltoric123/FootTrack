@@ -9,5 +9,7 @@ namespace FootTrack.Models
         public Tekmovanje Tekmovanje { get; set; } = null!;
 
         public ICollection<Krog> Krogi { get; set; } = new List<Krog>();
+        public ICollection<EkipaVSezoni> Ekipe { get; set; } = new List<EkipaVSezoni>();
+
     }
 }

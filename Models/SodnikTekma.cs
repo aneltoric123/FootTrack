@@ -1,11 +1,11 @@
 namespace FootTrack.Models
 {
-    public class Sodnik_Tekma
+    public class SodnikTekma
     {
-        public int TekmaID { get; set; }
+        public int TekmaId { get; set; }
         public Tekma Tekma { get; set; } = null!;
 
-        public int SodnikID { get; set; }
+        public int SodnikId { get; set; }
         public Sodnik Sodnik { get; set; } = null;
 
         public string Vloga { get; set; } = string.Empty;

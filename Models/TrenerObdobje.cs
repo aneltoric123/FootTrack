@@ -9,7 +9,7 @@ namespace FootTrack.Models
         public int EkipaId { get; set; }
         public Ekipa Ekipa { get; set; } = null!;
 
-        public DateTime Od { get; set; }
-        public DateTime? Do { get; set; }
+        public DateTime Zacetek { get; set; }
+        public DateTime? Konec { get; set; }
     }
 }

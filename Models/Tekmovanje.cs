@@ -2,7 +2,7 @@ namespace FootTrack.Models
 {
     public class Tekmovanje
     {
-        public int TekmvovanjeId { get; set; }
+        public int TekmovanjeId { get; set; }
         public string Ime { get; set; } = string.Empty;
 
         public int DrzavaId { get; set; }

@@ -2,7 +2,7 @@ namespace FootTrack.Models
 {
     public class Uporabnik
     {
-        public int UserId { get; set; }
+        public int UporabnikId { get; set; }
         public string UporabniskoIme { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string GesloHash { get; set; } = string.Empty;
@@ -10,7 +10,6 @@ namespace FootTrack.Models
         public int? NajljubsaEkipaId { get; set; }
         public Ekipa? NajljubsaEkipa { get; set; }
 
-        public int? NajljubseTekmovanjeId { get; set; }
-        public Tekmovanje? NajljubseTekmovanje { get; set; }
+        public ICollection<Tekmovanje> Naj_Tekmovanja { get; set; } = new List<Tekmovanje>();
     }
 }

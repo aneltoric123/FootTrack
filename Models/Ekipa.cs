@@ -4,7 +4,7 @@ namespace FootTrack.Models
     {
         public int EkipaId { get; set; }
         public string Ime { get; set; } = string.Empty;
-        public string Kratica { get; set; }
+        public string Kratica { get; set; } = string.Empty;
         public DateOnly Datum_Ustanovitve { get; set; }
         
         public int StadionId { get; set; }

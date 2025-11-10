@@ -1,9 +1,10 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using FootTrack.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FootTrack.Data
 {
-    public class FootTrackContext : DbContext
+    public class FootTrackContext : IdentityDbContext<Uporabnik>
     {
         public FootTrackContext(DbContextOptions<FootTrackContext> options) : base(options) {}
 

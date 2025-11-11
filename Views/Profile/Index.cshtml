@@ -1,0 +1,14 @@
+@model FootTrack.Models.Uporabnik
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">👤 My Profile</h2>
+    <div class="card shadow-sm p-4">
+        <p><strong>Username:</strong> @Model.UporabniskoIme</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger mt-3">Logout</a>
+    </div>
+</div>

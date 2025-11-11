@@ -1,0 +1,29 @@
+@page
+@using Microsoft.AspNetCore.Identity
+@using FootTrack.Models
+@inject UserManager<Uporabnik> UserManager
+@model ProfileModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold text-primary mb-4">Your Profile</h2>
+
+    @if (Model.User != null)
+    {
+        <div class="card shadow-sm p-4 rounded-3">
+            <div class="mb-3">
+                <strong>Username:</strong> @Model.User.UporabniskoIme
+            </div>
+            <div class="mb-3">
+                <strong>Email:</strong> @Model.User.Email
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">Unable to load profile information.</div>
+    }
+</div>

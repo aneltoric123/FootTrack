@@ -1,8 +1,30 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@{
     ViewData["Title"] = "Home Page";
 }
+@inject UserManager<FootTrack.Models.Uporabnik> UserManager
+@{
+    var appUser = await UserManager.GetUserAsync(User);
+}
+ <div class="container mt-5 text-center">
+ @if (User.Identity?.IsAuthenticated ?? false)
+    {
+      
+    <h1 class="display-4 mb-4 fw-bold text-primary">⚽ Welcome to FootTrack,@appUser.UporabniskoIme</h1>
+    <p class="lead text-muted">Track and explore football results, teams, and upcoming matches.</p>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <hr class="my-5" />
+
+    <h2 class="fw-semibold">Latest Match Results</h2>
+    <p class="text-muted">Coming soon — live football match data integration.</p>
+    }
+    else
+    {
+        <h1 class="display-4 mb-4 fw-bold text-primary">⚽ Welcome to FootTrack!</h1>
+        <p class="lead text-muted">Join now to track your favorite teams and games.</p>
+        <a class="btn btn-primary btn-lg mt-3 me-2" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="btn btn-outline-secondary btn-lg mt-3" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    }
+
+    
 </div>

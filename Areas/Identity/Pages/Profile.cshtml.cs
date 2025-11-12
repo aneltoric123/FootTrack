@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using FootTrack.Models;
+using FootTrack.Data;
 
 public class ProfileModel : PageModel
 {
@@ -12,10 +13,12 @@ public class ProfileModel : PageModel
         _userManager = userManager;
     }
 
-    public Uporabnik? User { get; set; }
+    public Uporabnik? Uporabnik { get; set; }
 
     public async Task OnGetAsync()
     {
-        User = await _userManager.GetUserAsync(HttpContext.User);
+        var Uporabnik = await _userManager.GetUserAsync(HttpContext.User);
+        
+        
     }
 }

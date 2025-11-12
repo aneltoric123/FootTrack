@@ -68,12 +68,18 @@ namespace FootTrack.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                Ekipa najEkipa = null;
+                if (Input.NajljubsaEkipaId.HasValue)
+                {
+                    najEkipa = await _context.Ekipe.FirstOrDefaultAsync(e => e.EkipaId == Input.NajljubsaEkipaId.Value);
+                }
                 var user = new Uporabnik
                 {
                     UserName = Input.UporabniskoIme,
                     Email = Input.Email,
                     UporabniskoIme = Input.UporabniskoIme,
-                    NajljubsaEkipaId = Input.NajljubsaEkipaId
+                    NajljubsaEkipaId = Input.NajljubsaEkipaId,
+                    NajljubsaEkipa = najEkipa
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

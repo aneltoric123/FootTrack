@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.Security.Claims;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -120,6 +121,12 @@ namespace FootTrack.Areas.Identity.Pages.Account
     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
     return Page();
 }
+                var claims = new List<Claim>
+                {
+                    new Claim("NajljubsaEkipa",user.NajljubsaEkipa?.Ime ?? "None")
+                };
+                await _signInManager.SignInWithClaimsAsync(user, isPersistent: false, claims);
+                
                 var result = await _signInManager.PasswordSignInAsync(user.UporabniskoIme, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {

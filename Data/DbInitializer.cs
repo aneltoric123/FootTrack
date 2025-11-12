@@ -15,9 +15,9 @@ namespace FootTrack.Data
             {
                 var drzave = new List<Drzava>
                 {
-                    new Drzava { Ime = "Slovenija" },
-                    new Drzava { Ime = "Anglija" },
-                    new Drzava { Ime = "Nemčija" }
+                    new Drzava { Ime = "Slovenia" },
+                    new Drzava { Ime = "England" },
+                    new Drzava { Ime = "Germany" }
                 };
                 context.Drzave.AddRange(drzave);
                 await context.SaveChangesAsync();
@@ -26,9 +26,9 @@ namespace FootTrack.Data
             // --- Seed Cities ---
             if (!context.Mesta.Any())
             {
-                var slovenija = context.Drzave.First(d => d.Ime == "Slovenija");
-                var ang = context.Drzave.First(d => d.Ime == "Anglija");
-                var nem = context.Drzave.First(d => d.Ime == "Nemčija");
+                var slovenija = context.Drzave.First(d => d.Ime == "Slovenia");
+                var ang = context.Drzave.First(d => d.Ime == "England");
+                var nem = context.Drzave.First(d => d.Ime == "Germany");
 
                 var mesta = new List<Mesto>
                 {
@@ -77,9 +77,9 @@ namespace FootTrack.Data
             // --- Seed Players ---
             if (!context.Igralci.Any())
             {
-                var slovenija = context.Drzave.First(d => d.Ime == "Slovenija");
-                var ang = context.Drzave.First(d => d.Ime == "Anglija");
-                var nem = context.Drzave.First(d => d.Ime == "Nemčija");
+                var slovenija = context.Drzave.First(d => d.Ime == "Slovenia");
+                var ang = context.Drzave.First(d => d.Ime == "England");
+                var nem = context.Drzave.First(d => d.Ime == "Germany");
 
                 var olimpija = context.Ekipe.First(e => e.Ime == "NK Olimpija Ljubljana");
                 var manu = context.Ekipe.First(e => e.Ime == "Manchester United");
@@ -113,9 +113,9 @@ namespace FootTrack.Data
             // --- Seed Competitions and Seasons ---
             if (!context.Tekmovanja.Any())
             {
-                var slo = context.Drzave.FirstOrDefault(d => d.Ime == "Slovenija");
-                var eng = context.Drzave.FirstOrDefault(d => d.Ime == "Anglija");
-                var ger = context.Drzave.FirstOrDefault(d => d.Ime == "Nemčija");
+                var slo = context.Drzave.FirstOrDefault(d => d.Ime == "Slovenia");
+                var eng = context.Drzave.FirstOrDefault(d => d.Ime == "England");
+                var ger = context.Drzave.FirstOrDefault(d => d.Ime == "Germany");
                 var tekmovanja = new List<Tekmovanje>
                 {
                     new Tekmovanje { Ime = "Premier League",DrzavaId=eng.DrzavaId },

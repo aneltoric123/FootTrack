@@ -1,24 +1,51 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using System.Xml.Schema;
+using FootTrack.Data;
 using FootTrack.Models;
-
-namespace FootTrack.Controllers;
+using FootTrack.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly FootTrackContext _context;
+    private readonly UserManager<Uporabnik> _userManager;
+
+    public HomeController(FootTrackContext context, UserManager<Uporabnik> userManager)
     {
-        return View();
+        _context = context;
+        _userManager = userManager;
     }
 
-    public IActionResult Privacy()
+    public async Task<IActionResult> Index()
     {
-        return View();
-    }
+        var appUser = await _userManager.GetUserAsync(User);
+        List<Tekma>? tekme = new();
+        Ekipa? najEkipa = null;
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        if (appUser != null && appUser.NajljubsaEkipaId.HasValue)
+        {
+            najEkipa = await _context.Ekipe
+                .Include(e => e.Stadion)
+                .ThenInclude(s => s.Mesto)
+                .ThenInclude(m => m.Drzava)
+                .FirstOrDefaultAsync(e => e.EkipaId == appUser.NajljubsaEkipaId.Value);
+
+            var query = _context.Tekme.Include(t => t.DomacaEkipa).Include(t => t.GostujocaEkipa)
+            .Where(t => t.DomacaEkipaId == najEkipa.EkipaId || t.GostujocaEkipaId == najEkipa.EkipaId);
+
+            tekme = await query.ToListAsync();
+        }
+
+        var viewModel = new HomeViewModel
+        {
+            AppUser = appUser,
+            NajEkipa = najEkipa,
+            Tekme = tekme,
+
+
+        };
+
+        return View(viewModel);
     }
 }

@@ -190,16 +190,133 @@ namespace FootTrack.Data
 
                 // --- Events on matches ---
                 var igralci = context.Igralci.ToList();
-                var dogodki = new List<DogodekNaTekmi>
-                {
-                    new DogodekNaTekmi { IgralecId = igralci[1].IgralecId, TekmaId = tekme[0].TekmaId, St_Dogodka = 1, TipDogodka = "Goal" },
-                    new DogodekNaTekmi { IgralecId = igralci[2].IgralecId, TekmaId = tekme[0].TekmaId, St_Dogodka = 2, TipDogodka = "Goal" },
-                    new DogodekNaTekmi { IgralecId = igralci[4].IgralecId, TekmaId = tekme[1].TekmaId, St_Dogodka = 1, TipDogodka = "Goal" },
-                    new DogodekNaTekmi { IgralecId = igralci[5].IgralecId, TekmaId = tekme[1].TekmaId, St_Dogodka = 2, TipDogodka = "Goal" },
-                };
-                context.Dogodek_Na_Tekmi.AddRange(dogodki);
+
+var dogodki = new List<DogodekNaTekmi>
+{
+    new DogodekNaTekmi { IgralecId = igralci[1].IgralecId, TekmaId = tekme[0].TekmaId, St_Dogodka = 1, Minuta = 30, TipDogodka = "Goal" },
+    new DogodekNaTekmi { IgralecId = igralci[2].IgralecId, TekmaId = tekme[0].TekmaId, St_Dogodka = 2, Minuta = 54, TipDogodka = "Goal" },
+    new DogodekNaTekmi { IgralecId = igralci[4].IgralecId, TekmaId = tekme[1].TekmaId, St_Dogodka = 1, Minuta = 2, TipDogodka = "Goal" },
+    new DogodekNaTekmi { IgralecId = igralci[5].IgralecId, TekmaId = tekme[1].TekmaId, St_Dogodka = 2, Minuta = 78, TipDogodka = "Goal" },
+};
+
+foreach (var d in dogodki)
+{
+    // check if event already exists
+    if (!context.Dogodek_Na_Tekmi.Any(x => x.IgralecId == d.IgralecId && x.TekmaId == d.TekmaId && x.St_Dogodka == d.St_Dogodka))
+    {
+        context.Dogodek_Na_Tekmi.Add(d);
+    }
+}
                 await context.SaveChangesAsync();
             }
+            // --- Seed More Teams ---
+if (!context.Ekipe.Any(e => e.Ime.Contains("Real") || e.Ime.Contains("Barcelona")))
+{
+    var lj = context.Stadioni.First(s => s.Ime == "Stadion Stožice");
+    var wembley = context.Stadioni.First(s => s.Ime == "Wembley");
+    var olympia = context.Stadioni.First(s => s.Ime == "Olympiastadion");
+
+    var additionalTeams = new List<Ekipa>
+    {
+        new Ekipa { Ime = "Real Madrid", StadionId = olympia.StadionId },
+        new Ekipa { Ime = "FC Barcelona", StadionId = olympia.StadionId },
+        new Ekipa { Ime = "Liverpool", StadionId = wembley.StadionId },
+        new Ekipa { Ime = "Chelsea", StadionId = wembley.StadionId },
+        new Ekipa { Ime = "Maribor", StadionId = lj.StadionId }
+    };
+    context.Ekipe.AddRange(additionalTeams);
+    await context.SaveChangesAsync();
+}
+
+// --- Seed More Players ---
+if (!context.Igralci.Any(i => i.Ime.Contains("Messi") || i.Ime.Contains("Modric")))
+{
+    var ekipe = context.Ekipe.ToList();
+    var drzave = context.Drzave.ToList();
+
+    var additionalPlayers = new List<Igralec>
+    {
+        new Igralec { Ime = "Lionel Messi", Priimek = "Messi", EkipaId = ekipe.First(e => e.Ime=="FC Barcelona").EkipaId, DrzavaId = drzave.First(d=>d.Ime=="Germany").DrzavaId, Pozicija="Forward" },
+        new Igralec { Ime = "Luka Modric", Priimek = "Modric", EkipaId = ekipe.First(e => e.Ime=="Real Madrid").EkipaId, DrzavaId = drzave.First(d=>d.Ime=="Slovenia").DrzavaId, Pozicija="Midfielder" },
+        new Igralec { Ime = "Mohamed Salah", Priimek = "Salah", EkipaId = ekipe.First(e => e.Ime=="Liverpool").EkipaId, DrzavaId = drzave.First(d=>d.Ime=="England").DrzavaId, Pozicija="Forward" },
+        new Igralec { Ime = "N'Golo", Priimek = "Kante", EkipaId = ekipe.First(e => e.Ime=="Chelsea").EkipaId, DrzavaId = drzave.First(d=>d.Ime=="England").DrzavaId, Pozicija="Midfielder" },
+        new Igralec { Ime = "Nejc", Priimek = "Skubic", EkipaId = ekipe.First(e => e.Ime=="Maribor").EkipaId, DrzavaId = drzave.First(d=>d.Ime=="Slovenia").DrzavaId, Pozicija="Defender" }
+    };
+    context.Igralci.AddRange(additionalPlayers);
+    await context.SaveChangesAsync();
+}
+
+// --- Seed More Matches ---
+if (!context.Tekme.Any(t => t.Datum.Year == 2025))
+{
+    var ekipe = context.Ekipe.ToList();
+    var krogi = context.Krogi.ToList();
+    var stadioni = context.Stadioni.ToList();
+    var matches = new List<Tekma>();
+
+    foreach (var doma in ekipe)
+    {
+        foreach (var gost in ekipe.Where(e => e.EkipaId != doma.EkipaId))
+        {
+            matches.Add(new Tekma
+            {
+                Datum = DateTime.Now.AddDays(new Random().Next(-10, 30)),
+                DomacaEkipaId = doma.EkipaId,
+                GostujocaEkipaId = gost.EkipaId,
+                KrogId = krogi[new Random().Next(krogi.Count)].KrogId,
+                StadionId = stadioni[new Random().Next(stadioni.Count)].StadionId,
+                GoliDomaci = new Random().Next(0, 5),
+                GoliGosti = new Random().Next(0, 5)
+            });
+        }
+    }
+    context.Tekme.AddRange(matches);
+    await context.SaveChangesAsync();
+}
+
+// --- Seed Match Events (Goals, Cards) ---
+// --- Seed Match Events (Goals, Cards) ---
+var igralciAll = context.Igralci.ToList();
+var tekmeAll = context.Tekme.ToList();
+var events = new List<DogodekNaTekmi>();
+var rnd = new Random();
+
+foreach (var tekma in tekmeAll)
+{
+    var domaciIgralci = igralciAll.Where(i => i.EkipaId == tekma.DomacaEkipaId).ToList();
+        var gostIgralci = igralciAll.Where(i => i.EkipaId == tekma.GostujocaEkipaId).ToList();
+
+    // Random 3-5 events per match
+    int eventCount = rnd.Next(3, 6);
+    for (int i = 0; i < eventCount; i++)
+    {
+        var isGoal = rnd.Next(0, 2) == 0;
+        var igralec = (i % 2 == 0) ? domaciIgralci[rnd.Next(domaciIgralci.Count)] : gostIgralci[rnd.Next(gostIgralci.Count)];
+
+        var stDogodka = i + 1;
+
+        // Only add if this event does not already exist
+        if (!context.Dogodek_Na_Tekmi.Any(x =>
+                x.TekmaId == tekma.TekmaId &&
+                x.IgralecId == igralec.IgralecId &&
+                x.St_Dogodka == stDogodka))
+        {
+            events.Add(new DogodekNaTekmi
+            {
+                TekmaId = tekma.TekmaId,
+                IgralecId = igralec.IgralecId,
+                St_Dogodka = stDogodka,
+                Minuta = rnd.Next(1, 91),
+                TipDogodka = isGoal ? "Goal" : (rnd.Next(0, 2) == 0 ? "Yellow Card" : "Red Card")
+            });
+        }
+    }
+}
+
+context.Dogodek_Na_Tekmi.AddRange(events);
+await context.SaveChangesAsync();
+
+
         }
     }
 }

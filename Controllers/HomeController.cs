@@ -31,7 +31,7 @@ public class HomeController : Controller
                 .ThenInclude(m => m.Drzava)
                 .FirstOrDefaultAsync(e => e.EkipaId == appUser.NajljubsaEkipaId.Value);
 
-            var query = _context.Tekme.Include(t => t.DomacaEkipa).Include(t => t.GostujocaEkipa)
+            var query = _context.Tekme.Include(t => t.DomacaEkipa).Include(t => t.GostujocaEkipa).Include(t=>t.Stadion).Include(f => f.Krog)
             .Where(t => t.DomacaEkipaId == najEkipa.EkipaId || t.GostujocaEkipaId == najEkipa.EkipaId);
 
             tekme = await query.ToListAsync();

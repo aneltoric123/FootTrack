@@ -1,0 +1,35 @@
+@model FootTrack.Models.ViewModels.TekmaDetailsViewModel
+
+<h1>@Model.Tekma.DomacaEkipa.Ime - @Model.Tekma.GostujocaEkipa.Ime</h1>
+
+<p>
+    Date: @Model.Tekma.Datum.ToString("dd.MM.yyyy HH:mm") <br />
+    Stadium: @Model.Tekma.Stadion.Ime (@Model.Tekma.Stadion.Mesto.Ime, @Model.Tekma.Stadion.Mesto.Drzava.Ime)
+</p>
+<h2>Match Events</h2>
+
+<ul>
+@foreach (var d in Model.Dogodki)
+{
+    <li>
+        <b>@d.Minuta'</b> - @d.Igralec.Ime @d.Igralec.Priimek @d.TipDogodka
+    </li>
+}
+</ul>
+<h2>Lineups</h2>
+
+<h3>@Model.Tekma.DomacaEkipa.Ime</h3>
+<ul>
+@foreach (var p in Model.Igralci.Where(i => i.Igralec.EkipaId == Model.Tekma.DomacaEkipaId))
+{
+    <li>@p.Igralec.Ime @p.Igralec.Priimek (@(p.ZacetnaPostava ? "Starting Lineup" : "Bench"))</li>
+}
+</ul>
+
+<h3>@Model.Tekma.GostujocaEkipa.Ime</h3>
+<ul>
+@foreach (var p in Model.Igralci.Where(i => i.Igralec.EkipaId == Model.Tekma.GostujocaEkipaId))
+{
+    <li>@p.Igralec.Ime @p.Igralec.Priimek (@(p.ZacetnaPostava ? "Starting Lineup" : "Bench"))</li>
+}
+</ul>

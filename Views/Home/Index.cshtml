@@ -25,17 +25,23 @@
                 <th>Home Team</th>
                 <th>Score</th>
                 <th>Away Team</th>
-                <th>Competition</th>
+                <th>Stadium</th>
             </tr>
         </thead>
         <tbody>
         @foreach (var tekma in Model.Tekme)
         {
+            
             <tr>
                 <td>@tekma.Datum.ToString("dd.MM.yyyy")</td>
                 <td>@tekma.DomacaEkipa.Ime</td>
-                <td>@tekma.GoliDomaci : @tekma.GoliGosti</td>
+                <td>
+                <a asp-controller="Tekma" asp-action="Details" asp-route-id="@tekma.TekmaId">
+                @tekma.GoliDomaci : @tekma.GoliGosti
+                </a>
+                </td>
                 <td>@tekma.GostujocaEkipa.Ime</td>
+                <td>@tekma.Stadion?.Ime</td>
             </tr>
         }
         </tbody>

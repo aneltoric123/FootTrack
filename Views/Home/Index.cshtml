@@ -1,66 +1,129 @@
 ﻿@model FootTrack.Models.ViewModels.HomeViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
+<div class="container py-5">
 
- <div class="container mt-5 text-center">
- @if (User?.Identity?.IsAuthenticated ?? false)
+    @if (User?.Identity?.IsAuthenticated ?? false)
     {
-    <h1 class="display-4 mb-4 fw-bold text-primary">⚽ Welcome to FootTrack,@Model.AppUser?.UporabniskoIme</h1>
-    <p class="lead text-muted">Track and explore football results, teams, and upcoming matches.</p>
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-primary">
+                ⚽ Welcome to <span class="text-dark">FootTrack</span>, @Model.AppUser?.UporabniskoIme!
+            </h1>
+            <p class="lead text-muted">
+                Track your favorite football teams, match results, and upcoming games.
+            </p>
+        </div>
 
-    <hr class="my-5" />
+        <hr class="my-5" />
     }
-    @if (Model.NajEkipa != null)
-{
-    <h2 class="fw-semibold">Latest Match Results From Your Favourite Team</h2>
-    <div class="my-3">
-        <strong>@Model.NajEkipa.Ime</strong>
-        @if (Model.Tekme.Count > 0){
-            <table class="table table-striped mt-4">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Home Team</th>
-                <th>Score</th>
-                <th>Away Team</th>
-                <th>Stadium</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var tekma in Model.Tekme)
-        {
-            
-            <tr>
-                <td>@tekma.Datum.ToString("dd.MM.yyyy")</td>
-                <td>@tekma.DomacaEkipa.Ime</td>
-                <td>
-                <a asp-controller="Tekma" asp-action="Details" asp-route-id="@tekma.TekmaId">
-                @tekma.GoliDomaci : @tekma.GoliGosti
-                </a>
-                </td>
-                <td>@tekma.GostujocaEkipa.Ime</td>
-                <td>@tekma.Stadion?.Ime</td>
-            </tr>
-        }
-        </tbody>
-    </table>
-    }
-    else{
-<p>No matches found for this team</p>
-    }
-        
-    </div>
-}
-
     else
     {
-        <h1 class="display-4 mb-4 fw-bold text-primary">⚽ Welcome to FootTrack!</h1>
-        <p class="lead text-muted">Join now to track your favorite teams and games.</p>
-        <a class="btn btn-primary btn-lg mt-3 me-2" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        <a class="btn btn-outline-secondary btn-lg mt-3" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <div class="text-center mb-5">
+            <h1 class="display-3 fw-bold text-primary">
+                ⚽ Welcome to <span class="text-dark">FootTrack</span>!
+            </h1>
+            <p class="lead text-muted">
+                Join now to explore match results, stats, and your favorite teams.
+            </p>
+            <div class="mt-4">
+                <a class="btn btn-primary btn-lg px-4 me-3" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                <a class="btn btn-outline-secondary btn-lg px-4" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </div>
+        </div>
+        <hr class="my-5" />
     }
 
-    
+    @if (Model.NajEkipa != null)
+    {
+        <div class="card shadow-lg border-0 rounded-4 mb-5">
+            <div class="card-body p-4">
+
+                <h2 class="fw-bold mb-3 text-center text-dark">
+                    Latest Results From <span class="text-primary">@Model.NajEkipa.Ime</span>
+                </h2>
+
+                <div class="text-center mb-4">
+                    <span class="badge bg-primary fs-5 px-4 py-2">@Model.NajEkipa.Ime</span>
+                </div>
+
+                @if (Model.Tekme.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Date</th>
+                                    <th class="text-center">Competition</th>
+                                    <th class="text-center">Home Team</th>
+                                    <th class="text-center">Score</th>
+                                    <th class="text-center">Away Team</th>
+                                    <th class="text-center">Stadium</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var latestMatches = Model.Tekme.OrderByDescending(t => t.Datum).Take(5);
+                                }
+
+                                @foreach (var tekma in latestMatches)
+                                {
+                                    var isHome = tekma.DomacaEkipaId == Model.NajEkipa.EkipaId;
+                                    var goalsFor = isHome ? tekma.GoliDomaci : tekma.GoliGosti;
+                                    var goalsAgainst = isHome ? tekma.GoliGosti : tekma.GoliDomaci;
+
+                                    string scoreClass = goalsFor > goalsAgainst ? "bg-success text-white rounded px-2 py-1" :
+                                                        goalsFor == goalsAgainst ? "bg-warning text-dark rounded px-2 py-1" :
+                                                        "bg-danger text-white rounded px-2 py-1";
+                                <tr>
+                                    <td class="fw-semibold">@tekma.Datum.ToString("dd.MM.yyyy")</td>
+                                    <td class="text-center">@tekma.Krog.Sezona.Tekmovanje.Ime</td>
+                                    <td class="text-center">@tekma.DomacaEkipa.Ime</td>
+                                    <td class="text-center">
+                                        <a asp-controller="Tekma" asp-action="Details" asp-route-id="@tekma.TekmaId" class="@scoreClass text-decoration-none">
+                                            @tekma.GoliDomaci : @tekma.GoliGosti
+                                        </a>
+                                    </td>
+                                    <td class="text-center">@tekma.GostujocaEkipa.Ime</td>
+                                    <td class="text-center">@tekma.Stadion?.Ime</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <a asp-controller="Tekma" asp-action="AllMatches" asp-route-teamId="@Model.NajEkipa.EkipaId" class="btn btn-outline-primary">
+                            See All Matches
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center text-muted mb-0">No matches found for this team.</p>
+                }
+            </div>
+        </div>
+    }
+
+    <!-- All Competitions Section -->
+    <h2 class="fw-bold mb-4 text-center text-dark">Competitions</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var tekmovanje in Model.Tekmovanja)
+        {
+             var latestSeason = tekmovanje.Sezone.OrderByDescending(s => s.Leto).FirstOrDefault();
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">@tekmovanje.Ime</h5>
+                        <a asp-controller="Tekmovanje" asp-action="SeasonDetails" asp-route-seasonId="@latestSeason.Id" class="btn btn-primary btn-sm">
+                            View Latest Season
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
 </div>

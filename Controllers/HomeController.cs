@@ -22,6 +22,7 @@ public class HomeController : Controller
         var appUser = await _userManager.GetUserAsync(User);
         List<Tekma>? tekme = new();
         Ekipa? najEkipa = null;
+        List<Tekmovanje> tekmovanja = await _context.Tekmovanja.OrderBy(t=>t.Ime).ToListAsync();
 
         if (appUser != null && appUser.NajljubsaEkipaId.HasValue)
         {
@@ -31,8 +32,8 @@ public class HomeController : Controller
                 .ThenInclude(m => m.Drzava)
                 .FirstOrDefaultAsync(e => e.EkipaId == appUser.NajljubsaEkipaId.Value);
 
-            var query = _context.Tekme.Include(t => t.DomacaEkipa).Include(t => t.GostujocaEkipa).Include(t=>t.Stadion).Include(f => f.Krog)
-            .Where(t => t.DomacaEkipaId == najEkipa.EkipaId || t.GostujocaEkipaId == najEkipa.EkipaId);
+            var query = _context.Tekme.Include(t => t.DomacaEkipa).Include(t => t.GostujocaEkipa).Include(t=>t.Stadion).Include(f => f.Krog).ThenInclude(k => k.Sezona).ThenInclude(j => j.Tekmovanje)
+            .Where(t => t.DomacaEkipaId == najEkipa.EkipaId || t.GostujocaEkipaId == najEkipa.EkipaId).OrderByDescending(t => t.Datum);
 
             tekme = await query.ToListAsync();
         }
@@ -42,6 +43,7 @@ public class HomeController : Controller
             AppUser = appUser,
             NajEkipa = najEkipa,
             Tekme = tekme,
+            Tekmovanja = tekmovanja
 
 
         };

@@ -1,0 +1,16 @@
+@model List<FootTrack.Models.Tekmovanje>
+
+<h1 class="mb-4">Competitions</h1>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var t in Model)
+    {
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@t.Ime</h5>
+                    <a asp-action="Details" asp-route-id="@t.TekmovanjeId" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

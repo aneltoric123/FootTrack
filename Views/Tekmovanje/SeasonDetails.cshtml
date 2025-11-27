@@ -1,0 +1,76 @@
+@model FootTrack.Models.ViewModels.SeasonDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Sezona?.Tekmovanje?.Ime + " Season Details";
+
+    int? nextIndex = null;
+    int? prevIndex = null;
+
+    if (Model.CurrentKrog != null)
+    {
+        nextIndex = Model.CurrentKrogIndex + 1;
+        prevIndex = Model.CurrentKrogIndex - 1;
+    }
+}
+
+<h2>@Model.Sezona?.Leto</h2>
+
+@if (Model.CurrentKrog != null)
+{
+    <div class="d-flex justify-content-between mb-3">
+        <a asp-action="SeasonDetails" 
+           asp-route-seasonId="@Model.Sezona.Id" 
+           asp-route-krogIndex="@prevIndex" 
+           class="btn btn-outline-primary @(Model.CurrentKrogIndex == 0 ? "disabled" : "")">
+            ← Previous Round
+        </a>
+        <span>Round @Model.CurrentKrog.Stevilka</span>
+        <a asp-action="SeasonDetails" 
+           asp-route-seasonId="@Model.Sezona.Id" 
+           asp-route-krogIndex="@nextIndex" 
+           class="btn btn-outline-primary @(Model.CurrentKrogIndex == Model.Krogi.Count - 1 ? "disabled" : "")">
+            Next Round →
+        </a>
+    </div>
+
+    @* Render matches of this round *@
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Home Team</th>
+                <th>Score</th>
+                <th>Away Team</th>
+                <th>Stadium</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var match in Model.CurrentKrog.Tekme)
+            {
+                <tr>
+                    <td>@match.Datum.ToString("dd.MM.yyyy")</td>
+                    <td>@match.DomacaEkipa.Ime</td>
+                    <td>@match.GoliDomaci : @match.GoliGosti</td>
+                    <td>@match.GostujocaEkipa.Ime</td>
+                    <td>@match.Stadion?.Ime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="mt-3 text-center">
+    <a asp-controller="Tekmovanje" 
+       asp-action="Leaderboard" 
+       asp-route-seasonId="@Model.Sezona.Id" 
+       class="btn btn-outline-success">
+        View Leaderboard
+    </a>
+</div>
+}
+
+
+else
+{
+    <p class="text-center text-muted">
+        @ViewBag.Message ?? "No rounds available for this season."
+    </p>
+}

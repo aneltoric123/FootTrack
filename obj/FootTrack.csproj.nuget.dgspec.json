@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/aneltoric/Documents/IS/FootTrack/FootTrack.csproj": {}
+    "/Users/aneltoric/Documents/Uni/IS/FootTrack/FootTrack.csproj": {}
   },
   "projects": {
-    "/Users/aneltoric/Documents/IS/FootTrack/FootTrack.csproj": {
+    "/Users/aneltoric/Documents/Uni/IS/FootTrack/FootTrack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/aneltoric/Documents/IS/FootTrack/FootTrack.csproj",
+        "projectUniqueName": "/Users/aneltoric/Documents/Uni/IS/FootTrack/FootTrack.csproj",
         "projectName": "FootTrack",
-        "projectPath": "/Users/aneltoric/Documents/IS/FootTrack/FootTrack.csproj",
+        "projectPath": "/Users/aneltoric/Documents/Uni/IS/FootTrack/FootTrack.csproj",
         "packagesPath": "/Users/aneltoric/.nuget/packages/",
-        "outputPath": "/Users/aneltoric/Documents/IS/FootTrack/obj/",
+        "outputPath": "/Users/aneltoric/Documents/Uni/IS/FootTrack/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/aneltoric/.nuget/NuGet/NuGet.Config"
@@ -57,23 +57,23 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.21, )"
+              "version": "[8.0.22, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.21, )"
+              "version": "[8.0.22, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.21, )"
+              "version": "[8.0.22, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.21, )"
+              "version": "[8.0.22, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

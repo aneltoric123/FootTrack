@@ -21,6 +21,7 @@ builder.Services.AddDefaultIdentity<Uporabnik>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<LeaderboardService>();
 var app = builder.Build();
 
 using(var scope = app.Services.CreateScope())

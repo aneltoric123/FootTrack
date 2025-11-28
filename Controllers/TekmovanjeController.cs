@@ -9,9 +9,16 @@ using System.Globalization;
 public class TekmovanjeController: Controller
 {
     private readonly FootTrackContext _context;
-    public TekmovanjeController(FootTrackContext context)
+    private readonly LeaderboardService _leaderboardService;
+    public TekmovanjeController(FootTrackContext context,LeaderboardService leaderboardService)
     {
         _context = context;
+        _leaderboardService = leaderboardService;
+    }
+    public async Task<IActionResult> UpdateLeaderboard(int seasonId)
+    {
+        await _leaderboardService.UpdateLeaderboardAsync(seasonId);
+        return RedirectToAction("SeasonDetails",new {seasonId});
     }
     public async Task<IActionResult> SeasonDetails(int seasonId,int? krogIndex)
     {

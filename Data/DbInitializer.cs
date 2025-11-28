@@ -26,10 +26,9 @@ namespace FootTrack.Data
                 await context.SaveChangesAsync();
             }
 
-            // --- Seed Cities ---
             if (!context.Mesta.Any())
             {
-                var drzave = context.Drzave.ToList();
+                var drzave = context.Drzave.AsNoTracking().ToList();
                 var mesta = new List<Mesto>
                 {
                     new Mesto { Ime = "Ljubljana", DrzavaId = drzave.First(d => d.Ime=="Slovenia").DrzavaId },
@@ -45,7 +44,7 @@ namespace FootTrack.Data
             // --- Seed Stadiums ---
             if (!context.Stadioni.Any())
             {
-                var mesta = context.Mesta.ToList();
+                var mesta = context.Mesta.AsNoTracking().ToList();
                 var stadioni = new List<Stadion>
                 {
                     new Stadion { Ime = "Stadion Stožice", Datum_Otvoritve = new DateTime(1970, 7, 15), Kapaciteta = 15000, MestoId = mesta.First(m=>m.Ime=="Ljubljana").MestoId },
@@ -61,7 +60,7 @@ namespace FootTrack.Data
             // --- Seed Competitions ---
             if (!context.Tekmovanja.Any())
             {
-                var drzave = context.Drzave.ToList();
+                var drzave = context.Drzave.AsNoTracking().ToList();
                 var tekmovanja = new List<Tekmovanje>
                 {
                     new Tekmovanje { Ime="Slovenian Prva Liga", DrzavaId = drzave.First(d=>d.Ime=="Slovenia").DrzavaId },
@@ -91,7 +90,7 @@ namespace FootTrack.Data
             // --- Seed Teams ---
             if (!context.Ekipe.Any())
             {
-                var stadioni = context.Stadioni.ToList();
+                var stadioni = context.Stadioni.AsNoTracking().ToList();
                 var ekipe = new List<Ekipa>
                 {
                     new Ekipa { Ime="NK Olimpija Ljubljana", StadionId = stadioni.First(s=>s.Ime=="Stadion Stožice").StadionId },
@@ -111,7 +110,7 @@ namespace FootTrack.Data
             // --- Seed Rounds (5 per season) ---
             if (!context.Krogi.Any())
             {
-                var allSeasons = context.Sezone.ToList();
+                var allSeasons = context.Sezone.AsNoTracking().ToList();
                 foreach (var season in allSeasons)
                 {
                     for(int i=1;i<=5;i++)
@@ -125,13 +124,13 @@ namespace FootTrack.Data
             // --- Seed Matches ---
             if (!context.Tekme.Any())
             {
-                var allKrogi = context.Krogi.Include(k=>k.Sezona).ToList();
-                var allEkipe = context.Ekipe.ToList();
-                var allStadioni = context.Stadioni.ToList();
+                var allKrogi = await context.Krogi.Include(k=>k.Sezona).ToListAsync();
+                var allEkipe = context.Ekipe.AsNoTracking().ToList();
+                var allStadioni = context.Stadioni.AsNoTracking().ToList();
 
                 foreach(var krog in allKrogi)
                 {
-                    var teams = allEkipe.OrderBy(x=>rnd.Next()).Take(4).ToList(); // pick 4 random teams for this round
+                    var teams = allEkipe.OrderBy(x=>rnd.Next()).Take(4).ToList();
                     for(int i=0;i<teams.Count-1;i+=2)
                     {
                         context.Tekme.Add(new Tekma
@@ -149,11 +148,10 @@ namespace FootTrack.Data
                 await context.SaveChangesAsync();
             }
 
-            // --- Seed Players (20–30) ---
             if (!context.Igralci.Any())
             {
-                var allEkipe = context.Ekipe.ToList();
-                var allDrzave = context.Drzave.ToList();
+                var allEkipe = context.Ekipe.AsNoTracking().ToList();
+                var allDrzave = context.Drzave.AsNoTracking().ToList();
                 var positions = new[] {"Goalkeeper","Defender","Midfielder","Forward"};
 
                 foreach(var team in allEkipe)
@@ -172,11 +170,10 @@ namespace FootTrack.Data
                 await context.SaveChangesAsync();
             }
 
-            // --- Seed Match Events (Goals, Cards) ---
             if (!context.Dogodek_Na_Tekmi.Any())
             {
-                var allTekme = context.Tekme.ToList();
-                var allPlayers = context.Igralci.ToList();
+                var allTekme = await context.Tekme.ToListAsync();
+                var allPlayers = await context.Igralci.ToListAsync();
                 foreach(var tekma in allTekme)
                 {
                     int eventsCount = rnd.Next(2,6);
@@ -193,7 +190,39 @@ namespace FootTrack.Data
                         });
                     }
                 }
-                await context.SaveChangesAsync();
+var allSeasons = context.Sezone.AsNoTracking().ToList();
+var allTeams = context.Ekipe.AsNoTracking().ToList();
+var allTeamInSeason = context.Ekipa_V_Sezoni.AsNoTracking().ToList();
+
+foreach (var season in allSeasons)
+{
+    foreach (var team in allTeams)
+    {
+        if (!allTeamInSeason.Any(e => e.EkipaId == team.EkipaId && e.SezonaId == season.Id))
+        {
+            context.Ekipa_V_Sezoni.Add(new EkipaVSezoni
+            {
+                EkipaId = team.EkipaId,
+                SezonaId = season.Id,
+                Tocke = 0,
+                Zmage = 0,
+                Remi = 0,
+                Porazi = 0,
+                Goli = 0,
+                Prejeti_Goli = 0
+            });
+        }
+    }
+                await context.SaveChangesAsync();    
+                var allSeason = context.Sezone.AsNoTracking().ToList();
+                var leaderboardService = new LeaderboardService(context);
+
+                foreach(var seasons in allSeasons)
+            {
+                    await leaderboardService.UpdateLeaderboardAsync(seasons.Id);
+            }
+    
+}
             }
         }
     }

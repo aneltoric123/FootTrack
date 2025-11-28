@@ -106,20 +106,23 @@
             </div>
         </div>
     }
-
-    <!-- All Competitions Section -->
     <h2 class="fw-bold mb-4 text-center text-dark">Competitions</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var tekmovanje in Model.Tekmovanja)
+        @foreach (var tekmovanje in Model.Tekmovanja.Where(t => t != null))
         {
-             var latestSeason = tekmovanje.Sezone.OrderByDescending(s => s.Leto).FirstOrDefault();
+             var latestSeason = tekmovanje.Sezone?.OrderByDescending(s => s.Leto).FirstOrDefault();
             <div class="col">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-body text-center">
                         <h5 class="card-title fw-bold">@tekmovanje.Ime</h5>
+                        @if (latestSeason != null){
                         <a asp-controller="Tekmovanje" asp-action="SeasonDetails" asp-route-seasonId="@latestSeason.Id" class="btn btn-primary btn-sm">
                             View Latest Season
                         </a>
+                        }
+                        else{
+                            <span class ="badge bg-secondary">No seasons yet</span>
+                        }
                     </div>
                 </div>
             </div>

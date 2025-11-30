@@ -5,14 +5,18 @@ using FootTrack.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 
 public class TekmaController : Controller
 {
     private readonly FootTrackContext _context;
+    private readonly UserManager<Uporabnik> _usermanager;
 
-    public TekmaController(FootTrackContext context)
+    public TekmaController(FootTrackContext context,UserManager<Uporabnik> usermanager)
     {
         _context = context;
+        _usermanager = usermanager;
+
     }
     public async Task<IActionResult> Details(int id)
     {

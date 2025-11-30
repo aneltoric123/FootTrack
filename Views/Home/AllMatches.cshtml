@@ -1,40 +1,9 @@
-﻿@model FootTrack.Models.ViewModels.HomeViewModel
+@model FootTrack.Models.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "Home";
 }
 
 <div class="container py-5">
-
-    @if (User?.Identity?.IsAuthenticated ?? false)
-    {
-        <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold text-primary">
-                ⚽ Welcome to <span class="text-dark">FootTrack</span>, @Model.AppUser?.UporabniskoIme!
-            </h1>
-            <p class="lead text-muted">
-                Track your favorite football teams, match results, and upcoming games.
-            </p>
-        </div>
-
-        <hr class="my-5" />
-    }
-    else
-    {
-        <div class="text-center mb-5">
-            <h1 class="display-3 fw-bold text-primary">
-                ⚽ Welcome to <span class="text-dark">FootTrack</span>!
-            </h1>
-            <p class="lead text-muted">
-                Join now to explore match results, stats, and your favorite teams.
-            </p>
-            <div class="mt-4">
-                <a class="btn btn-primary btn-lg px-4 me-3" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                <a class="btn btn-outline-secondary btn-lg px-4" asp-area="Identity" asp-page="/Account/Register">Register</a>
-            </div>
-        </div>
-        <hr class="my-5" />
-    }
-
     @if (Model.NajEkipa != null)
     {
         <div class="card shadow-lg border-0 rounded-4 mb-5">
@@ -47,7 +16,6 @@
                 <div class="text-center mb-4">
                     <span class="badge bg-primary fs-5 px-4 py-2">@Model.NajEkipa.Ime</span>
                 </div>
-
                 @if (Model.Tekme.Any())
                 {
                     <div class="table-responsive">
@@ -63,11 +31,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @{
-                                    var latestMatches = Model.Tekme.OrderByDescending(t => t.Datum).Take(5);
-                                }
-
-                                @foreach (var tekma in latestMatches)
+                                @foreach (var tekma in Model.Tekme)
                                 {
                                     var isHome = tekma.DomacaEkipaId == Model.NajEkipa.EkipaId;
                                     var goalsFor = isHome ? tekma.GoliDomaci : tekma.GoliGosti;
@@ -92,12 +56,6 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="text-center mt-3">
-                        <a asp-controller="Home" asp-action="AllMatches" asp-route-teamId="@Model.NajEkipa.EkipaId" class="btn btn-outline-primary">
-                            See All Matches
-                        </a>
-                    </div>
                 }
                 else
                 {
@@ -106,27 +64,5 @@
             </div>
         </div>
     }
-    <h2 class="fw-bold mb-4 text-center text-dark">Competitions</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var tekmovanje in Model.Tekmovanja.Where(t => t != null))
-        {
-             var latestSeason = tekmovanje.Sezone?.OrderByDescending(s => s.Leto).FirstOrDefault();
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body text-center">
-                        <h5 class="card-title fw-bold">@tekmovanje.Ime</h5>
-                        @if (latestSeason != null){
-                        <a asp-controller="Tekmovanje" asp-action="SeasonDetails" asp-route-seasonId="@latestSeason.Id" class="btn btn-primary btn-sm">
-                            View Latest Season
-                        </a>
-                        }
-                        else{
-                            <span class ="badge bg-secondary">No seasons yet</span>
-                        }
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-
+    
 </div>

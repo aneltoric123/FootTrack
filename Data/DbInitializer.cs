@@ -11,7 +11,6 @@ namespace FootTrack.Data
             context.Database.Migrate();
             var rnd = new Random();
 
-            // --- Seed Countries ---
             if (!context.Drzave.Any())
             {
                 var drzave = new List<Drzava>
@@ -41,7 +40,7 @@ namespace FootTrack.Data
                 await context.SaveChangesAsync();
             }
 
-            // --- Seed Stadiums ---
+            
             if (!context.Stadioni.Any())
             {
                 var mesta = context.Mesta.AsNoTracking().ToList();
@@ -57,7 +56,6 @@ namespace FootTrack.Data
                 await context.SaveChangesAsync();
             }
 
-            // --- Seed Competitions ---
             if (!context.Tekmovanja.Any())
             {
                 var drzave = context.Drzave.AsNoTracking().ToList();
@@ -72,7 +70,7 @@ namespace FootTrack.Data
                 context.Tekmovanja.AddRange(tekmovanja);
                 await context.SaveChangesAsync();
 
-                // --- Seed Seasons ---
+
                 foreach(var t in tekmovanja)
                 {
                     for(int year = 2023; year <= 2025; year++)
@@ -87,7 +85,6 @@ namespace FootTrack.Data
                 await context.SaveChangesAsync();
             }
 
-            // --- Seed Teams ---
             if (!context.Ekipe.Any())
             {
                 var stadioni = context.Stadioni.AsNoTracking().ToList();
@@ -107,7 +104,6 @@ namespace FootTrack.Data
                 await context.SaveChangesAsync();
             }
 
-            // --- Seed Rounds (5 per season) ---
             if (!context.Krogi.Any())
             {
                 var allSeasons = context.Sezone.AsNoTracking().ToList();
@@ -121,7 +117,6 @@ namespace FootTrack.Data
                 await context.SaveChangesAsync();
             }
 
-            // --- Seed Matches ---
             if (!context.Tekme.Any())
             {
                 var allKrogi = await context.Krogi.Include(k=>k.Sezona).ToListAsync();

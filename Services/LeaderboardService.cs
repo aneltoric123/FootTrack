@@ -31,6 +31,7 @@ public class LeaderboardService
             var home = seasonTeams.FirstOrDefault(e => e.EkipaId == match.DomacaEkipaId);
             var away = seasonTeams.FirstOrDefault(e => e.EkipaId == match.GostujocaEkipaId);
             if (home != null && away != null){
+                
             home.Goli += match.GoliDomaci;
             away.Goli += match.GoliGosti;
             home.Prejeti_Goli += match.GoliGosti;

@@ -1,0 +1,55 @@
+@model FootTrack.Models.ViewModels.AdminViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container py-5">
+@if(Model.Admin != null){
+    <h1 class="text-center text-primary mb-4">Admin Dashboard ⚽</h1>
+    <p class="text-center text-muted mb-5">
+        Welcome, @Model.Admin.UporabniskoIme! Here you can manage games and competitions.
+    </p>
+
+    <div class="text-center mb-5">
+        <a asp-controller="Tekma" asp-action="Create" class="btn btn-success btn-lg px-4">
+            ➕ Add New Game
+        </a>
+    </div>
+
+    <h3 class="mb-3">Latest Matches</h3>
+    @if (Model.Tekme.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>Competition</th>
+                        <th>Home Team</th>
+                        <th>Score</th>
+                        <th>Away Team</th>
+                        <th>Stadium</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var t in Model.Tekme.OrderByDescending(x=>x.Datum).Take(10))
+                    {
+                        <tr>
+                            <td>@t.Datum.ToString("dd.MM.yyyy")</td>
+                            <td>@t.Krog.Sezona.Tekmovanje.Ime</td>
+                            <td>@t.DomacaEkipa.Ime</td>
+                            <td>@t.GoliDomaci : @t.GoliGosti</td>
+                            <td>@t.GostujocaEkipa.Ime</td>
+                            <td>@t.Stadion?.Ime</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">No matches found.</p>
+    }
+    }
+</div>

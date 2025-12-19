@@ -54,6 +54,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/aneltoric/Documents/Uni/IS/FootTrack/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/aneltoric/Documents/Uni/IS/FootTrack/Views/Home/AllMatches.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BbGxNYXRjaGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -82,8 +86,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/aneltoric/Documents/Uni/IS/FootTrack/Views/Tekma/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVrbWEvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/aneltoric/Documents/Uni/IS/FootTrack/Views/Tekma/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVrbWEvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/aneltoric/Documents/Uni/IS/FootTrack/Views/Tekmovanje/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVrbW92YW5qZS9DcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/aneltoric/Documents/Uni/IS/FootTrack/Views/Tekmovanje/Index.cshtml]

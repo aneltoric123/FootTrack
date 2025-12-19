@@ -1135,3 +1135,5 @@
 /Users/aneltoric/Documents/Uni/IS/FootTrack/obj/Debug/net8.0/FootTrack.pdb
 /Users/aneltoric/Documents/Uni/IS/FootTrack/obj/Debug/net8.0/FootTrack.genruntimeconfig.cache
 /Users/aneltoric/Documents/Uni/IS/FootTrack/obj/Debug/net8.0/ref/FootTrack.dll
+/Users/aneltoric/Documents/Uni/IS/FootTrack/bin/Debug/net8.0/DotNetEnv.dll
+/Users/aneltoric/Documents/Uni/IS/FootTrack/bin/Debug/net8.0/Sprache.dll

@@ -1,0 +1,36 @@
+@model FootTrack.Models.ViewModels.TekmaCreateViewModel
+@{
+    ViewData["Title"] = "Add New Game";
+}
+
+<div class="container py-5">
+    <h1 class="text-center mb-4">Add New Match ⚽</h1>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Tekma.Datum" class="form-label"></label>
+            <input asp-for="Tekma.Datum" class="form-control" type="date" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Tekma.DomacaEkipaId" class="form-label">Home Team</label>
+            <select asp-for="Tekma.DomacaEkipaId" class="form-control" asp-items="Model.Ekipe">
+                 <option value="">-- Select a team --</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Tekma.GostujocaEkipaId" class="form-label">Away Team</label>
+            <select  asp-for="Tekma.GostujocaEkipaId" class="form-control" asp-items="Model.Ekipe"> 
+                <option value="">-- Select a team --</option>
+                </select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Tekma.GoliDomaci" class="form-label">Home Goals</label>
+            <input asp-for="Tekma.GoliDomaci" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Tekma.GoliGosti" class="form-label">Away Goals</label>
+            <input asp-for="Tekma.GoliGosti" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Add Game</button>
+    </form>
+</div>

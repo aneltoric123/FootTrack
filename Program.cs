@@ -2,9 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using FootTrack.Models;
 using FootTrack.Data;
+using DotNetEnv;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-
+var adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
     "Server=localhost;Database=FootTrackDb;User Id=sa;Password=MyStr0ng!Pass;TrustServerCertificate=True;";

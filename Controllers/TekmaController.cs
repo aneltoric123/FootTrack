@@ -1,5 +1,9 @@
+using System.Threading.Tasks;
 using System.Xml.Schema;
 using FootTrack.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+
 using FootTrack.Models;
 using FootTrack.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +25,7 @@ public class TekmaController : Controller
     public async Task<IActionResult> Details(int id)
     {
         var tekma = await _context.Tekme.Include(t => t.DomacaEkipa).Include(t => t.GostujocaEkipa).Include(t => t.Stadion).ThenInclude(s => s.Mesto)
-        .ThenInclude(m => m.Drzava).Include(t => t.Dogodki).ThenInclude(i => i.Igralec).Include(t => t.Igralci).ThenInclude(g => g.Igralec)
+        .ThenInclude(m => m.Drzava).Include(t => t.Krog).ThenInclude(k => k.Sezona).ThenInclude(f => f.Tekmovanje).Include(t => t.Dogodki).ThenInclude(i => i.Igralec).Include(t => t.Igralci).ThenInclude(g => g.Igralec)
         .FirstOrDefaultAsync(t => t.TekmaId == id);
 
         if (tekma == null){
@@ -35,5 +39,30 @@ public class TekmaController : Controller
         };
         return View(vm);
     }
+    public async Task<IActionResult> Create()
+    {
+        var ekipe = await _context.Ekipe.ToListAsync();
+        var Ekipe = new SelectList(ekipe, "EkipaId", "Ime");
+        var tekma = new Tekma();
+        var vm = new TekmaCreateViewModel
+        {
+          Ekipe = Ekipe,
+          Tekma = tekma  
+        };
+        return View(vm);
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Tekma tekma)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Add(tekma);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Admin");
+        }
+        return View(tekma);
+    }
+
     
 }

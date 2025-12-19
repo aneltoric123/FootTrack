@@ -1,35 +1,58 @@
 @model FootTrack.Models.ViewModels.TekmaDetailsViewModel
+<link rel="stylesheet" href="~/css/details.css"/>
 
-<h1>@Model.Tekma.DomacaEkipa.Ime - @Model.Tekma.GostujocaEkipa.Ime</h1>
-
-<p>
-    Date: @Model.Tekma.Datum.ToString("dd.MM.yyyy HH:mm") <br />
-    Stadium: @Model.Tekma.Stadion.Ime (@Model.Tekma.Stadion.Mesto.Ime, @Model.Tekma.Stadion.Mesto.Drzava.Ime)
-</p>
-<h2>Match Events</h2>
-
-<ul>
-@foreach (var d in Model.Dogodki)
+@if (Model?.Tekma == null)
 {
-    <li>
-        <b>@d.Minuta'</b> - @d.Igralec.Ime @d.Igralec.Priimek @d.TipDogodka
-    </li>
+    <div class="alert alert-danger text-center">
+        Match data not available.
+    </div>
+    return;
 }
-</ul>
-<h2>Lineups</h2>
 
-<h3>@Model.Tekma.DomacaEkipa.Ime</h3>
-<ul>
-@foreach (var p in Model.Igralci.Where(i => i.Igralec.EkipaId == Model.Tekma.DomacaEkipaId))
-{
-    <li>@p.Igralec.Ime @p.Igralec.Priimek (@(p.ZacetnaPostava ? "Starting Lineup" : "Bench"))</li>
-}
-</ul>
+<div class="match-details">
+    <p class="game-header">
+        @Model.Tekma.Krog?.Sezona?.Tekmovanje?.Drzava
+        • @Model.Tekma.Krog?.Sezona?.Tekmovanje?.Ime
+        • Round @Model.Tekma.Krog?.Stevilka
+    </p>
 
-<h3>@Model.Tekma.GostujocaEkipa.Ime</h3>
-<ul>
-@foreach (var p in Model.Igralci.Where(i => i.Igralec.EkipaId == Model.Tekma.GostujocaEkipaId))
-{
-    <li>@p.Igralec.Ime @p.Igralec.Priimek (@(p.ZacetnaPostava ? "Starting Lineup" : "Bench"))</li>
-}
-</ul>
+    <p class="small-details">
+        📅 @Model.Tekma.Datum.ToString("dd.MM.yyyy HH:mm")
+        &nbsp;|&nbsp;
+        🏟 @(Model.Tekma.Stadion?.Ime ?? "Unknown stadium")
+        (@Model.Tekma.Stadion?.Mesto?.Ime,
+         @Model.Tekma.Stadion?.Mesto?.Drzava?.Ime)
+    </p>
+</div>
+
+<h1 class="game-title">
+    <span class="team home">@Model.Tekma.DomacaEkipa?.Ime</span>
+    <span class="score">@Model.Tekma.GoliDomaci : @Model.Tekma.GoliGosti</span>
+    <span class="team away">@Model.Tekma.GostujocaEkipa?.Ime</span>
+</h1>
+
+<h2 class="match-header">⚽ Match Events</h2>
+
+<div class="events">
+    @if (Model.Dogodki == null || !Model.Dogodki.Any())
+    {
+        <p class="text-muted text-center">No match events recorded.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var d in Model.Dogodki)
+            {
+                <li class="event">
+                    <span class="minute">@d.Minuta'</span>
+                    <span class="player">
+                        @(d.Igralec != null
+                            ? $"{d.Igralec.Ime} {d.Igralec.Priimek}"
+                            : "Unknown player")
+                    </span>
+                    <span class="event-type">@d.TipDogodka</span>
+                </li>
+            }
+        </ul>
+    }
+</div>

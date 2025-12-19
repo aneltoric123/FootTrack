@@ -20,6 +20,7 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         var appUser = await _userManager.GetUserAsync(User);
+        var adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
         List<Tekma>? tekme = new();
         Ekipa? najEkipa = null;
         List<Tekmovanje> tekmovanja = await _context.Tekmovanja.OrderBy(t=>t.Ime).ToListAsync();
@@ -37,6 +38,10 @@ public class HomeController : Controller
 
             tekme = await query.ToListAsync();
         }
+        if (appUser != null && appUser.Email == adminEmail)
+    {
+        return RedirectToAction("Index", "Admin");
+    }
 
         var viewModel = new HomeViewModel
         {
@@ -46,8 +51,8 @@ public class HomeController : Controller
             Tekmovanja = tekmovanja
 
         };
-
         return View(viewModel);
+        
     }
     public async Task<IActionResult> AllMatches(int id)
     {

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "gBvqsAjkSd9xlDQomA4FTB3GaZJDDko3hEtSbvgNyVE=",
+  "Hash": "y94vS9+JigmbEII2wP3P28E5x0bIUXGWwp7Ocbqles4=",
   "Source": "FootTrack",
   "BasePath": "_content/FootTrack",
   "Mode": "Default",
@@ -1193,6 +1193,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/Users/aneltoric/Documents/Uni/IS/FootTrack/obj/Debug/net8.0/scopedcss/projectbundle/FootTrack.bundle.scp.css"
+    },
+    {
+      "Identity": "/Users/aneltoric/Documents/Uni/IS/FootTrack/wwwroot/css/details.css",
+      "SourceId": "FootTrack",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/aneltoric/Documents/Uni/IS/FootTrack/wwwroot/",
+      "BasePath": "_content/FootTrack",
+      "RelativePath": "css/details.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/details.css"
     },
     {
       "Identity": "/Users/aneltoric/Documents/Uni/IS/FootTrack/wwwroot/css/site.css",

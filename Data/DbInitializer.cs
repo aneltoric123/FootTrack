@@ -1,16 +1,27 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using FootTrack.Models;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using DotNetEnv;
 
 namespace FootTrack.Data
 {
     public static class DbInitializer
     {
+        public static async Task SeedRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            if(!await roleManager.RoleExistsAsync("Admin"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+        }
+    
+
         public static async Task Initialize(FootTrackContext context, UserManager<Uporabnik> userManager)
         {
             context.Database.Migrate();
             var rnd = new Random();
-
             if (!context.Drzave.Any())
             {
                 var drzave = new List<Drzava>
@@ -185,9 +196,16 @@ namespace FootTrack.Data
                         });
                     }
                 }
+var adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
+var user = await context.Uporabniki.FirstOrDefaultAsync(u => u.Email == adminEmail);
+if(user != null)
+                {
+            await userManager.AddToRoleAsync(user, "Admin");
+                }
 var allSeasons = context.Sezone.AsNoTracking().ToList();
 var allTeams = context.Ekipe.AsNoTracking().ToList();
 var allTeamInSeason = context.Ekipa_V_Sezoni.AsNoTracking().ToList();
+
 
 foreach (var season in allSeasons)
 {

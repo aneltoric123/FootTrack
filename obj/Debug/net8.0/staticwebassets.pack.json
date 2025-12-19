@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets/FootTrack.bundle.scp.css"
     },
     {
+      "Id": "/Users/aneltoric/Documents/Uni/IS/FootTrack/wwwroot/css/details.css",
+      "PackagePath": "staticwebassets/css/details.css"
+    },
+    {
       "Id": "/Users/aneltoric/Documents/Uni/IS/FootTrack/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },

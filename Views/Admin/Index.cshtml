@@ -16,40 +16,102 @@
         </a>
     </div>
 
-    <h3 class="mb-3">Latest Matches</h3>
-    @if (Model.Tekme.Any())
+
+        <hr class="my-5" />
+    }
+    else 
     {
-        <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Date</th>
-                        <th>Competition</th>
-                        <th>Home Team</th>
-                        <th>Score</th>
-                        <th>Away Team</th>
-                        <th>Stadium</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(var t in Model.Tekme.OrderByDescending(x=>x.Datum).Take(10))
-                    {
-                        <tr>
-                            <td>@t.Datum.ToString("dd.MM.yyyy")</td>
-                            <td>@t.Krog.Sezona.Tekmovanje.Ime</td>
-                            <td>@t.DomacaEkipa.Ime</td>
-                            <td>@t.GoliDomaci : @t.GoliGosti</td>
-                            <td>@t.GostujocaEkipa.Ime</td>
-                            <td>@t.Stadion?.Ime</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+        <div class="text-center mb-5">
+            <h1 class="display-3 fw-bold text-primary">
+                ⚽ Welcome to <span class="text-dark">FootTrack</span>!
+            </h1>
+            <p class="lead text-muted">
+                Join now to explore match results, stats, and your favorite teams.
+            </p>
+            <div class="mt-4">
+                <a class="btn btn-primary btn-lg px-4 me-3" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                <a class="btn btn-outline-secondary btn-lg px-4" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </div>
         </div>
+        <hr class="my-5" />
     }
-    else
-    {
-        <p class="text-muted">No matches found.</p>
-    }
-    }
-</div>
+
+
+        <div class="card shadow-lg border-0 rounded-4 mb-5">
+            <div class="card-body p-4">
+                <p class="text-center">Recent Matches</p>
+
+                @if (Model.Tekme.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Date</th>
+                                    <th class="text-center">Competition</th>
+                                    <th class="text-center">Home Team</th>
+                                    <th class="text-center">Score</th>
+                                    <th class="text-center">Away Team</th>
+                                    <th class="text-center">Stadium</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var latestMatches = Model.Tekme.OrderByDescending(t => t.Datum).Take(5);
+                                }
+
+                                @foreach (var tekma in latestMatches)
+                                {
+                                    var isHome = tekma.DomacaEkipaId == Model.najEkipa.EkipaId;
+                                    var goalsFor = isHome ? tekma.GoliDomaci : tekma.GoliGosti;
+                                    var goalsAgainst = isHome ? tekma.GoliGosti : tekma.GoliDomaci;
+
+                                    string scoreClass = goalsFor > goalsAgainst ? "bg-success text-white rounded px-2 py-1" :
+                                                        goalsFor == goalsAgainst ? "bg-warning text-dark rounded px-2 py-1" :
+                                                        "bg-danger text-white rounded px-2 py-1";
+                                <tr>
+                                    <td class="fw-semibold">@tekma.Datum.ToString("dd.MM.yyyy")</td>
+                                    <td class="text-center">@tekma.Krog.Sezona.Tekmovanje.Ime</td>
+                                    <td class="text-center">@tekma.DomacaEkipa.Ime</td>
+                                    <td class="text-center">
+                                        <a asp-controller="Tekma" asp-action="Details" asp-route-id="@tekma.TekmaId" class="@scoreClass text-decoration-none">
+                                            @tekma.GoliDomaci : @tekma.GoliGosti
+                                        </a>
+                                    </td>
+                                    <td class="text-center">@tekma.GostujocaEkipa.Ime</td>
+                                    <td class="text-center">@tekma.Stadion?.Ime</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <a asp-controller="Home" asp-action="AllMatches" asp-route-teamId="@Model.najEkipa.EkipaId" class="btn btn-outline-primary">
+                            See All Matches
+                        </a>
+                    </div>
+            }
+            </div>
+    <h2 class="fw-bold mb-4 text-center text-dark">Competitions</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var tekmovanje in Model.Tekmovanja.Where(t => t != null))
+        {
+             var latestSeason = tekmovanje.Sezone?.OrderByDescending(s => s.Leto).FirstOrDefault();
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">@tekmovanje.Ime</h5>
+                        @if (latestSeason != null){
+                        <a asp-controller="Tekmovanje" asp-action="SeasonDetails" asp-route-seasonId="@latestSeason.Id" class="btn btn-primary btn-sm">
+                            View Latest Season
+                        </a>
+                        }
+                        else{
+                            <span class ="badge bg-secondary">No seasons yet</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        </div>

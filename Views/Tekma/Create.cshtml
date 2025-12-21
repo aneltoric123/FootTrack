@@ -31,6 +31,19 @@
             <label asp-for="Tekma.GoliGosti" class="form-label">Away Goals</label>
             <input asp-for="Tekma.GoliGosti" class="form-control" />
         </div>
+        <div class="mb-3">
+    <label asp-for="Tekma.StadionId" class="form-label">Stadium</label>
+    <select asp-for="Tekma.StadionId" class="form-control" asp-items="Model.Stadioni">
+        <option value="">-- Select stadium --</option>
+    </select>
+</div>
+<div class="mb-3">
+    <label asp-for="Tekma.KrogId" class="form-label">Round</label>
+    <select asp-for="Tekma.KrogId" class="form-control" asp-items="Model.Krogi">
+        <option value="">-- Select round --</option>
+    </select>
+</div>
+
         <button type="submit" class="btn btn-primary">Add Game</button>
     </form>
 </div>

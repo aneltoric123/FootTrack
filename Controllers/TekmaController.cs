@@ -39,30 +39,64 @@ public class TekmaController : Controller
         };
         return View(vm);
     }
+    [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var ekipe = await _context.Ekipe.ToListAsync();
-        var Ekipe = new SelectList(ekipe, "EkipaId", "Ime");
-        var tekma = new Tekma();
-        var vm = new TekmaCreateViewModel
-        {
-          Ekipe = Ekipe,
-          Tekma = tekma  
-        };
-        return View(vm);
-    }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Tekma tekma)
+    
+    var model = new TekmaCreateViewModel
     {
-        if (ModelState.IsValid)
+        Tekma = new Tekma(),
+
+        Ekipe = _context.Ekipe
+            .Select(e => new SelectListItem
+            {
+                Value = e.EkipaId.ToString(),
+                Text = e.Ime
+            }).ToList(),
+
+        Stadioni = _context.Stadioni
+            .Select(s => new SelectListItem
+            {
+                Value = s.StadionId.ToString(),
+                Text = s.Ime
+            }).ToList(),
+        Krogi = _context.Krogi
+        .Include(k => k.Sezona)
+            .ThenInclude(s => s.Tekmovanje)
+        .Select(k => new SelectListItem
         {
-            _context.Add(tekma);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Admin");
-        }
-        return View(tekma);
+            Value = k.KrogId.ToString(),
+            Text = $"Krog {k.Stevilka} – {k.Sezona.Leto} {k.Sezona.Tekmovanje.Ime}"
+        }).ToList()
+    };
+
+    return View(model);
+}
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult Create(TekmaCreateViewModel model)
+{
+    Console.WriteLine($"ADDED GAME ID: {model.Tekma.TekmaId}");
+    if (!ModelState.IsValid)
+{
+    Console.WriteLine("MODELSTATE INVALID");
+
+    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+    {
+        Console.WriteLine(error.ErrorMessage);
     }
+
+    return View(model);
+}
+
+    _context.Tekme.Add(model.Tekma);
+    _context.SaveChanges();
+
+
+    _context.SaveChanges();
+    return RedirectToAction("Index","Admin");
+}
+
 
     
 }

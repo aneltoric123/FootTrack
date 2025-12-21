@@ -27,6 +27,11 @@ public class AdminController : Controller
         {
             return Unauthorized();
         }
+        var najEkipa = await _context.Ekipe
+                .Include(e => e.Stadion)
+                .ThenInclude(s => s.Mesto)
+                .ThenInclude(m => m.Drzava)
+                .FirstOrDefaultAsync(e => e.EkipaId == adminUser.NajljubsaEkipaId.Value);
         var tekme = await _context.Tekme
     .Include(t => t.DomacaEkipa)
     .Include(t => t.GostujocaEkipa)
@@ -41,6 +46,7 @@ public class AdminController : Controller
         
         {
             Admin = adminUser,
+            najEkipa = najEkipa,
             Tekme = tekme,
             Tekmovanja = tekmovanja
 

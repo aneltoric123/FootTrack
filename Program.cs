@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using FootTrack.Models;
 using FootTrack.Data;
 
-
+DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSwaggerGen();

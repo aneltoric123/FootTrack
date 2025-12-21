@@ -8,16 +8,16 @@ namespace FootTrack.Models
         public int GoliGosti { get; set; }
 
         public int DomacaEkipaId { get; set; }
-        public Ekipa DomacaEkipa { get; set; } = null!;
+        public Ekipa? DomacaEkipa { get; set; }
 
         public int GostujocaEkipaId { get; set; }
-        public Ekipa GostujocaEkipa { get; set; } = null!;
+        public Ekipa? GostujocaEkipa { get; set; }
 
         public int StadionId { get; set; }
-        public Stadion Stadion { get; set; } = null!;
+        public Stadion? Stadion { get; set; }
 
         public int KrogId { get; set; }
-        public Krog Krog { get; set; } = null!;
+        public Krog? Krog { get; set; }
 
         public ICollection<IgralecNaTekmi> Igralci { get; set; } = new List<IgralecNaTekmi>();
         public ICollection<DogodekNaTekmi> Dogodki { get; set; } = new List<DogodekNaTekmi>();

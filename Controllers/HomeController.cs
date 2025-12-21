@@ -5,6 +5,7 @@ using FootTrack.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using  DotNetEnv;
 
 public class HomeController : Controller
 {

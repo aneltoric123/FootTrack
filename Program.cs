@@ -2,12 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using FootTrack.Models;
 using FootTrack.Data;
-using DotNetEnv;
 
-Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-var adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
+
+builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
     "Server=localhost;Database=FootTrackDb;User Id=sa;Password=MyStr0ng!Pass;TrustServerCertificate=True;";
@@ -26,6 +25,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<LeaderboardService>();
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+});
 
 using(var scope = app.Services.CreateScope())
 {

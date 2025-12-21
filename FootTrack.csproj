@@ -29,6 +29,7 @@
 
     <!-- Optional: scaffolding support -->
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0" />
   </ItemGroup>
 
 </Project>

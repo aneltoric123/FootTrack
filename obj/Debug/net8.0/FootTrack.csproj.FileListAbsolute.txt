@@ -1137,3 +1137,7 @@
 /Users/aneltoric/Documents/Uni/IS/FootTrack/obj/Debug/net8.0/ref/FootTrack.dll
 /Users/aneltoric/Documents/Uni/IS/FootTrack/bin/Debug/net8.0/DotNetEnv.dll
 /Users/aneltoric/Documents/Uni/IS/FootTrack/bin/Debug/net8.0/Sprache.dll
+/Users/aneltoric/Documents/Uni/IS/FootTrack/bin/Debug/net8.0/Microsoft.OpenApi.dll
+/Users/aneltoric/Documents/Uni/IS/FootTrack/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/aneltoric/Documents/Uni/IS/FootTrack/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/aneltoric/Documents/Uni/IS/FootTrack/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll

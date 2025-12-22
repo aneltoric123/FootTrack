@@ -11,6 +11,8 @@
         else{
             <p><strong>Favourite team:</strong> <em>No favourite team selected</em></p>
         }
-        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger mt-3">Logout</a>
+        <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+    <button type="submit" class="btn btn-link nav-link">Logout</button>
+</form>
     </div>
 </div>

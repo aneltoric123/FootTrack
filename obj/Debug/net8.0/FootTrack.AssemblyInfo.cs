@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FootTrack")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+041c80b72c9d30db3e4309187fef8e286c8cf9a4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+582f1e5fd0b2a3f493e3b537abeb71d745e1f200")]
 [assembly: System.Reflection.AssemblyProductAttribute("FootTrack")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FootTrack")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

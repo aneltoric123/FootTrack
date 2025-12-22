@@ -6,6 +6,7 @@ using FootTrack.Data;
 DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
+var adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -16,7 +17,13 @@ if (string.IsNullOrEmpty(connectionString))
 
 builder.Services.AddDbContext<FootTrackContext>(options =>
     options.UseSqlServer(connectionString));
-
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
+    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+    options.SlidingExpiration = true;
+});
 builder.Services.AddDefaultIdentity<Uporabnik>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;

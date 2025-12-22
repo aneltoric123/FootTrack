@@ -28,5 +28,6 @@ namespace FootTrack.Controllers
             user = await _context.Uporabniki.Include(u => u.NajljubsaEkipa).FirstOrDefaultAsync(u => u.Id == user.Id);
             return View(user);
         }
+        
     }
 }

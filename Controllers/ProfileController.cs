@@ -5,6 +5,7 @@ using FootTrack.Models;
 using FootTrack.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 
 namespace FootTrack.Controllers
 {
@@ -29,5 +30,22 @@ namespace FootTrack.Controllers
             return View(user);
         }
         
-    }
+[HttpPost]
+[ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+                return RedirectToAction("Index","Home");
+            }
+            else
+            {
+                return View("Index",user);
+            }
+        }
+
 }
+    }

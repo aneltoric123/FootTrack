@@ -12,8 +12,11 @@
             <p><strong>Favourite team:</strong> <em>No favourite team selected</em></p>
         }
         <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post" class="d-inline">
-    <button type="submit" class="btn btn-link nav-link">Logout</button>
+    <button type="submit" class="btn btn-danger mt-3">Logout</button>
+    </form>
+    <form id = "deleteForm" asp-area="Identity" asp-action="Delete" method="post">
+    <button type="submit" class="btn btn-danger mt-3">Delete Account</button>
+@Html.AntiForgeryToken()
 </form>
-
     </div>
 </div>

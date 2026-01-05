@@ -62,7 +62,7 @@
 
                                 @foreach (var tekma in latestMatches)
                                 {
-                                    var isHome = tekma.DomacaEkipaId == Model.najEkipa.EkipaId;
+                                    var isHome = tekma.DomacaEkipaId == Model?.najEkipa?.EkipaId;
                                     var goalsFor = isHome ? tekma.GoliDomaci : tekma.GoliGosti;
                                     var goalsAgainst = isHome ? tekma.GoliGosti : tekma.GoliDomaci;
 
@@ -71,14 +71,14 @@
                                                         "bg-danger text-white rounded px-2 py-1";
                                 <tr>
                                     <td class="fw-semibold">@tekma.Datum.ToString("dd.MM.yyyy")</td>
-                                    <td class="text-center">@tekma.Krog.Sezona.Tekmovanje.Ime</td>
-                                    <td class="text-center">@tekma.DomacaEkipa.Ime</td>
+                                    <td class="text-center">@tekma.Krog?.Sezona.Tekmovanje.Ime</td>
+                                    <td class="text-center">@tekma.DomacaEkipa?.Ime</td>
                                     <td class="text-center">
                                         <a asp-controller="Tekma" asp-action="Details" asp-route-id="@tekma.TekmaId" class="@scoreClass text-decoration-none">
                                             @tekma.GoliDomaci : @tekma.GoliGosti
                                         </a>
                                     </td>
-                                    <td class="text-center">@tekma.GostujocaEkipa.Ime</td>
+                                    <td class="text-center">@tekma.GostujocaEkipa?.Ime</td>
                                     <td class="text-center">@tekma.Stadion?.Ime</td>
                                 </tr>
                                 }

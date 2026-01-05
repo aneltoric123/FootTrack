@@ -19,7 +19,7 @@ builder.Services.AddDbContext<FootTrackContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/Identity/Account/Login";
+    options.LoginPath = "/Identity/Account/Login"; 
     options.LogoutPath = "/Identity/Account/Logout";
     options.ExpireTimeSpan = TimeSpan.FromHours(1);
     options.SlidingExpiration = true;

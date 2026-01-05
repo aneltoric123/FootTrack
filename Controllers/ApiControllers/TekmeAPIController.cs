@@ -22,18 +22,33 @@ public IActionResult Test()
     return Ok(User.Identity!.Name);
 }
     [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        var tekme = await _context.Tekme.Include(t => t.DomacaEkipa).Include(t => t.GostujocaEkipa).Include(t => t.Stadion).ThenInclude(s => s.Mesto).ThenInclude(m => m.Drzava)
-        .Include(t => t.Krog).ThenInclude(k => k.Sezona).ThenInclude(f => f.Tekmovanje).ToListAsync();
-        return Ok(tekme);
-    }
+    [HttpGet]
+public async Task<IActionResult> GetAll()
+{
+    var tekme = await _context.Tekme
+        .Include(t => t.DomacaEkipa)
+        .Include(t => t.GostujocaEkipa)
+        .Include(t => t.Stadion)
+        .Select(t => new TekmaDTO
+        {
+            TekmaId = t.TekmaId,
+            DomacaEkipaIme = t.DomacaEkipa.Ime,
+            GostujocaEkipaIme = t.GostujocaEkipa.Ime,
+            StadionIme = t.Stadion.Ime,
+            Datum = t.Datum,
+            DomacaGol = t.GoliGosti,
+            GostujocaGol = t.GoliGosti
+        })
+        .ToListAsync();
+
+    return Ok(tekme);
+}
+
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        var tekma = await _context.Tekme.Include(t => t.DomacaEkipa).Include(t => t.GostujocaEkipa).Include(t => t.Stadion).ThenInclude(s => s.Mesto).ThenInclude(m => m.Drzava)
-        .Include(t => t.Krog).ThenInclude(k => k.Sezona).ThenInclude(f => f.Tekmovanje).FirstOrDefaultAsync(t=> t.TekmaId ==id);
+        var tekma = await _context.Tekme.Include(t => t.DomacaEkipa).Include(t => t.GostujocaEkipa).Include(t => t.Stadion).FirstOrDefaultAsync(t=> t.TekmaId ==id);
         if (tekma == null) return NotFound();
         return Ok(tekma);
     }

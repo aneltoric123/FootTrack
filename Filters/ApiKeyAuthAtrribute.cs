@@ -23,12 +23,16 @@ namespace FootTrack.Filters
             }
 
             var apiKey = Environment.GetEnvironmentVariable("ApiKey");
+            var receivedKey = potentialApiKey.ToString().Trim();
 
-            if (string.IsNullOrEmpty(apiKey)  || apiKey.Trim() != potentialApiKey.ToString().Trim())
-            {
-                context.Result = new UnauthorizedResult();
-                return;
-            }
+Console.WriteLine($"Received: '{receivedKey}', Expected: '{apiKey?.Trim()}'");
+
+if (string.IsNullOrEmpty(apiKey) || apiKey.Trim() != receivedKey)
+{
+    context.Result = new UnauthorizedResult();
+    return;
+}
+
 
         
             await next();

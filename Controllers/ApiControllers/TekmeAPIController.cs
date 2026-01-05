@@ -52,6 +52,11 @@ public async Task<IActionResult> GetAll()
         if (tekma == null) return NotFound();
         return Ok(tekma);
     }
+    public async Task<IActionResult> GetAllTeams()
+    {
+        var allTeams = await _context.Ekipe.ToListAsync();
+        return Ok(allTeams);
+    }
 
 
     [HttpPost]

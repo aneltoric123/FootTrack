@@ -21,8 +21,6 @@ public IActionResult Test()
 {
     return Ok(User.Identity!.Name);
 }
-
-   
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {

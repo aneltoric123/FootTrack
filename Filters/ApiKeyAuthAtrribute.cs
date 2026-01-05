@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Threading.Tasks;
 
@@ -21,10 +22,9 @@ namespace FootTrack.Filters
                 return;
             }
 
-            var configuration = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-            var apiKey = configuration.GetValue<string>("ApiKey");
+            var apiKey = Environment.GetEnvironmentVariable("ApiKey");
 
-            if (!apiKey.Equals(potentialApiKey))
+            if (string.IsNullOrEmpty(apiKey)  || apiKey.Trim() != potentialApiKey.ToString().Trim())
             {
                 context.Result = new UnauthorizedResult();
                 return;

@@ -62,12 +62,26 @@ public async Task<IActionResult> GetAll()
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(Tekma tekma)
+public async Task<IActionResult> Create([FromBody] TekmaCreateDTO dto)
+{
+    var tekma = new Tekma
     {
-        _context.Tekme.Add(tekma);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(Get), new { id = tekma.TekmaId }, tekma);
-    }
+        Datum = dto.Datum,
+        DomacaEkipaId = dto.DomacaEkipaId,
+        GostujocaEkipaId = dto.GostujocaEkipaId,
+        StadionId = dto.StadionId,
+        KrogId = dto.KrogId,
+        GoliDomaci = dto.DomacaGol,
+        GoliGosti = dto.GostujocaGol
+    };
+
+    _context.Tekme.Add(tekma);
+    await _context.SaveChangesAsync();
+
+    return CreatedAtAction(nameof(Get), new { id = tekma.TekmaId }, tekma);
+}
+
+
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, Tekma tekma)

@@ -7,14 +7,15 @@
 
 ## Opis Projekta
 
-Z spletno aplikacijo FootTrack bomo podprli spremljanje rezultatov in statistike nogometnih tekem in tekmovanj.Aplikacija je bila narejena in razvita z uporabo .NET 8.0 in gostovana z MS Azure.
+Z spletno aplikacijo FootTrack omogočajmo spremljanje rezultatov in statistike nogometnih tekem in tekmovanj.
+Aplikacija je bila narejena in razvita z uporabo .NET 8.0 in gostovana z MS Azure.
 
 Sistem je sestavljena iz:
 
 - spletne aplikacije,
 - REST API spletne storitve,
 - podatkovne baze,
-- Android odjemalca(Povezan z API)
+- Android mobilnega odjemalca(Povezan z API)
 
 ---
 
@@ -24,11 +25,27 @@ Sistem je sestavljena iz:
 
 # Opis Aplikacije
 
-Aplikacija FootTrack omogoča ljubiteljem nogometa veliko različnih funkcij.Sprva se novi uporabnik registra vpiše svoj ime,priimek,uporabniško,email,geslo ter na koncu si izbere svoj najljubšo ekipo.
+Aplikacija FootTrack omogoča ljubiteljem nogometa številne funkcionalnosti.
 
-Po uspešni registraciji navadni uporabniki potem lahko vidijo vse tekme ki jih je odigrala njihova najljubša ekipa,ter lahko vidi kaj se je zgodilo na tekmi,podatki o tekmi(kje se igralo,sodniki,igralci,krog,sezona,tekmovanje...).Navadni uporabniki lahko ogledajo svoj profil lahko ga izbrišejo in vidijo svoje podatke.Navadni uporabniki lahko še vidijo se vsa tekmovanje ki se odvijajo ter vidijo vse kroge v tekmovanju, rezultate itd;ter lahko še vidijo lestvico tekmovanja.Vidijo koliko je vsaka ekipa dosegla golov,prejela golov,število točk,število zmag,remijev,porazev.
+Ob prvem obisku se mora uporabnik registrirati z vnosom:
 
-Če pa je uporabnik admin lahko on sam ustvari nove tekme ko se zgodijo in vsi uporabniki lahko vidijo nove dodane tekme.
+- ime,
+- priimek,
+- uporabniško ime,
+- email,
+- geslo 
+- ter svojo najljubšo ekipo.
+
+Po uspešni registraciji navadni uporabniki:
+- vidijo vse tekme ki jih je odigrala njihova najljubša ekipa,
+- vidijo vse kaj se je zgodilo na tekmi,podatki o tekmi(kje se igralo,sodniki,igralci,krog,sezona,tekmovanje...)
+- ogledajo svoj profil lahko ga izbrišejo in vidijo svoje podatke.
+- vidijo vsa tekmovanje ki se odvijajo ter vidijo vse kroge v tekmovanju, rezultate itd
+- vidijo lestvico tekmovanja.Vidijo koliko je vsaka ekipa dosegla golov,prejela golov,število točk,število zmag,remijev,porazev.
+
+Uporabniki z admin pravico lahko:
+- ustvarijo nove tekme
+- urejajo rezultate tekem
 
 ## Tehnologije
 
@@ -48,6 +65,7 @@ Po uspešni registraciji navadni uporabniki potem lahko vidijo vse tekme ki jih 
 ![Home](images/Home.png)
 ![Leaderboard](images/Leaderboard.png)
 ![MatchDetails](images/MatchDetails.png)
+![Mobile](images/Mobile.png)
 
 ## Lokalni zagon aplikacije
 
@@ -65,6 +83,6 @@ Po uspešni registraciji navadni uporabniki potem lahko vidijo vse tekme ki jih 
 4. dotnet restore (Ustvariš Docker Container če ga nimaš in ga zaženeš)
 5. dotnet run
 
-Aplikacijo bo dostopna na https://localhost:5260
+Aplikacijo bo dostopna na https://localhost:5170
 
 

@@ -23,7 +23,6 @@ public IActionResult Test()
     return Ok(User.Identity!.Name);
 }
     [HttpGet]
-    [HttpGet]
 public async Task<IActionResult> GetAll()
 {
     var tekme = await _context.Tekme

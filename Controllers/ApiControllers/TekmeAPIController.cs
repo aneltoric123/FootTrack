@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using FootTrack.Filters;
 using FootTrack.Data;
+using System.Runtime.ExceptionServices;
 
 [ApiController]
 [ApiKeyAuth]
@@ -52,6 +53,7 @@ public async Task<IActionResult> GetAll()
         if (tekma == null) return NotFound();
         return Ok(tekma);
     }
+    [HttpGet("teams")]
     public async Task<IActionResult> GetAllTeams()
     {
         var allTeams = await _context.Ekipe.ToListAsync();
